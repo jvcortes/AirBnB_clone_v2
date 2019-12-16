@@ -45,11 +45,11 @@ class FileStorage:
             Return:
                 dictionary containing all the object instances.
         """
-        new_dict = {}
-        for key in self.__objects:
-            if cls.__name__ in key:
-                new_dict[key] = self.__objects[key]
         if cls:
+            new_dict = {}
+            for key in self.__objects:
+                if cls.__name__ in key:
+                    new_dict[key] = self.__objects[key]
             return new_dict
         return self.__objects
 
