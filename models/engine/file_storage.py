@@ -32,13 +32,14 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        new_dict = {}
-        for key in self.__objects:
-            if cls.__name__ in key:
-                new_dict[key] = self.__objects[key]
         if cls:
+            new_dict = {}
+            for key in self.__objects:
+                if cls.__name__ in key:
+                    new_dict[key] = self.__objects[key]
             return new_dict
-        return self.__objects
+        else:
+            return self.__objects
 
     def new(self, obj):
         """sets __object to given obj
