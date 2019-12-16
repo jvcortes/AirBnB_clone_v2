@@ -20,11 +20,23 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self):
+    def delete(self, obj=None):
+        for key in self.__objects:
+            if obj.id == self.__objects[key].id:
+                del self.__objects[key]
+                break
+
+    def all(self, cls=None):
         """returns a dictionary
         Return:
             returns a dictionary of __object
         """
+        new_dict = {}
+        for key in self.__objects:
+            if cls.__name__ in key:
+                new_dict[key] = self.__objects[key]
+        if cls:
+            return new_dict
         return self.__objects
 
     def new(self, obj):
