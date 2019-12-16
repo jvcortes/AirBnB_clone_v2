@@ -64,12 +64,17 @@ class HBNBCommand(cmd.Cmd):
                     arg_s = args[count].split("=")
                     if len(arg_s) > 1:
                         x = arg_s[1]
-                        for conv in (int, float):
-                            try:
-                                x = conv(x)
-                                break
-                            except ValueError:
-                                pass
+                        if x.startswith('"') and x.endswith('"'):
+                            x = x[1:-1]
+                        else:
+                            for conv in (int, float):
+                                try:
+                                    x = conv(x)
+                                    break
+                                except ValueError:
+                                    pass
+                        if isinstance(x, str):
+                            x = x.replace("_", " ")
                         setattr(new_instance, arg_s[0], x)
                         new_instance.save()
                         count += 1
