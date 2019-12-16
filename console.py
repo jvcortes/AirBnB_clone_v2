@@ -37,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             SyntaxError: when there is no args given
             NameError: when there is no object taht has the name
-        """
+
         try:
             if not line:
                 raise SyntaxError()
@@ -49,6 +49,34 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
+        """
+        args = line.split(" ")
+        if len(args) == 0:
+            print("** class name missing **")
+        else:
+            if args[0] in self.all_classes:
+                new_instance = eval(args[0] + "()")
+                new_instance.save()
+                print(new_instance.id)
+                number_args = len(args)
+                count = 1
+                while (number_args > 1):
+                    foo = args[count].split("=")
+                    x = foo[1]
+                    for conv in (int, float):
+                        try:
+                            x = conv(x)
+                            break
+                        except:
+                            pass
+                        if type(x) == str:
+                            x = x[1:-1]
+                        setattr(new_instance, foo[0], x)
+                        new_instance.save()
+                        count += 1
+                        number_args -= 1
+            else:
+                print("** class doesn't exist **")
 
     def do_show(self, line):
         """Prints the string representation of an instance
