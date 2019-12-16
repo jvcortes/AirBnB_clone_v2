@@ -61,20 +61,20 @@ class HBNBCommand(cmd.Cmd):
                 number_args = len(args)
                 count = 1
                 while (number_args > 1):
-                    foo = args[count].split("=")
-                    x = foo[1]
+                    arg_s = args[count].split("=")
+                    x = arg_s[1]
                     for conv in (int, float):
                         try:
                             x = conv(x)
                             break
-                        except:
+                        except ValueError:
                             pass
-                        if type(x) == str:
-                            x = x[1:-1]
-                        setattr(new_instance, foo[0], x)
-                        new_instance.save()
-                        count += 1
-                        number_args -= 1
+                        #if isinstance(x, str):
+                        #    x = x[1:-1]
+                    setattr(new_instance, arg_s[0], x)
+                    new_instance.save()
+                    count += 1
+                    number_args -= 1
             else:
                 print("** class doesn't exist **")
 
