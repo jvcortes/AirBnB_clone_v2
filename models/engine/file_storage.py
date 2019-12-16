@@ -25,6 +25,7 @@ class FileStorage:
             if obj.id == self.__objects[key].id:
                 del self.__objects[key]
                 break
+        self.save()
 
     def all(self, cls=None):
         """returns a dictionary
