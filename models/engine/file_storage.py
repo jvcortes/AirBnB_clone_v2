@@ -27,6 +27,9 @@ class FileStorage:
         Args:
             obj (BaseModel): object to delete
         """
+        if obj is None:
+            return
+
         for key in self.__objects:
             if obj.id == self.__objects[key].id:
                 del self.__objects[key]
