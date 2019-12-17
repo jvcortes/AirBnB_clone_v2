@@ -1,6 +1,11 @@
 #!/usr/bin/python3
-from relationship_state import Base, State
-from relationship_city import City
+from models.base_model import BaseModel, Base
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import (create_engine)
 import os
@@ -20,23 +25,22 @@ class DBStorage:
                                                         host,
                                                         database)
         self.__engine = create_engine(arg, pool_pre_ping=True)
+        Session = sessionmaker(bind=self.__engine)
+        self.__session = Session()
         
     def all(self, cls=None):
-        classes = [User, State]#, City, Amenity, Place, Review] 
-        Session = sessionmaker(bind=engine)
+        classes = [User, State, City, Amenity, Place, Review]
         objects = {}
-        self.__session = Session()
         if cls is None:
             for element in classes:
-                _query = session.query(element).all()
+                _query = self.__session.query(classes[element]).all()
                 for objecct in _query:
-                    key = str(element) + "." + str(objecct.id)
+                    key = element.__name__ + "." + str(objecct.id)
                     objects[key] = objecct
-            return objects
         else:
-            _query = session.query(cls).all()
+            _query = self.__session.query(cls).all()
             for objecct in _query:
-                key = str(element) + "." + str(objecct.id)
+                key =  cls.__name__ + "." + str(objecct.id)
                 objects[key] = objecct
         
-            return objects
+        return objects
