@@ -33,7 +33,7 @@ class DBStorage:
         objects = {}
         if cls is None:
             for element in classes:
-                _query = self.__session.query(classes[element]).all()
+                _query = self.__session.query(element).all()
                 for objecct in _query:
                     key = element.__name__ + "." + str(objecct.id)
                     objects[key] = objecct
@@ -44,3 +44,11 @@ class DBStorage:
                 objects[key] = objecct
         
         return objects
+
+
+    def reaload(self):
+        Base.metadata.create_all(self.__engine)
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session = scoped_session(session_factory)
+        self.__session = session()
+
