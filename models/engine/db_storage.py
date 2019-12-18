@@ -14,7 +14,7 @@ class DBStorage:
     __engine = None
     __session = None
 
-    
+
     def __init__(self):
         user = os.environ.get('HBNB_MYSQL_USER')
         password = os.environ.get('HBNB_MYSQL_PWD')
@@ -27,20 +27,39 @@ class DBStorage:
         self.__engine = create_engine(arg, pool_pre_ping=True)
         Session = sessionmaker(bind=self.__engine)
         self.__session = Session()
-        
+
     def all(self, cls=None):
         classes = [User, State, City, Amenity, Place, Review]
         objects = {}
         if cls is None:
             for element in classes:
-                _query = self.__session.query(classes[element]).all()
+                _query = self.__session.query(element).all()
                 for objecct in _query:
                     key = element.__name__ + "." + str(objecct.id)
                     objects[key] = objecct
         else:
             _query = self.__session.query(cls).all()
             for objecct in _query:
-                key =  cls.__name__ + "." + str(objecct.id)
+                key = cls.__name__ + "." + str(objecct.id)
                 objects[key] = objecct
-        
+
         return objects
+
+    def new(self, obj):
+        """Adds a new object in the database session
+
+        Parameters:
+            obj (Base): Object to introduce into the database session
+
+        """
+        self.__session.add(obj)
+
+    def save(self):
+        """Commits all changes into the database session."""
+        self.__session.commit()
+
+    def delete(self, obj):
+        """Deletes an object from the database session.
+        """
+        if obj:
+            obj.delete()
