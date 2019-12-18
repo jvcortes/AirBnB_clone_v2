@@ -6,7 +6,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import (create_engine)
 import os
 
@@ -63,3 +63,9 @@ class DBStorage:
         """
         if obj:
             obj.delete()
+
+    def reload(self):
+        Base.metadata.create_all(self.__engine)
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session = scoped_session(session_factory)
+        self.__session = session()
