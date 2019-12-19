@@ -56,7 +56,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             if args[0] in self.all_classes:
                 new_instance = eval(args[0] + "()")
-                new_instance.save()
                 print(new_instance.id)
                 number_args = len(args)
                 count = 1
@@ -76,9 +75,9 @@ class HBNBCommand(cmd.Cmd):
                         if isinstance(x, str):
                             x = x.replace("_", " ")
                         setattr(new_instance, arg_s[0], x)
-                        new_instance.save()
                         count += 1
                     number_args -= 1
+                new_instance.save()
             else:
                 print("** class doesn't exist **")
 
