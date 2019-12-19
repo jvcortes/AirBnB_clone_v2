@@ -50,7 +50,7 @@ class DBStorage:
             cls (class): Custom class, if specified, the function will return
                 only the records which are associated with the class.
         """
-        classes = [City, State]
+        classes = [City, State, User]
         objects = {}
 
         if cls is None:
