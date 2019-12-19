@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """This is the base model class for AirBnB"""
 import uuid
-import models
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 from datetime import datetime
+import models
 
 
 Base = declarative_base()
@@ -18,7 +18,7 @@ class BaseModel:
 
     id = Column(String(60), primary_key=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    updated_at = Column(DateTime, nullable=False, default=created_at)
 
 
     def __init__(self, *args, **kwargs):
@@ -47,7 +47,7 @@ class BaseModel:
             returns a string of class name, id, and dictionary
         """
         return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+            type(self).__name__, self.id, self.to_dict())
 
     def __repr__(self):
         """return a string representaion
@@ -76,6 +76,6 @@ class BaseModel:
         my_dict["__class__"] = str(type(self).__name__)
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
-        if "_sa_instance_state" in self.__dict__:
-            del self.__dict__["_sa_instance_state"]
+        if "_sa_instance_state" in my_dict:
+            del my_dict["_sa_instance_state"]
         return my_dict
