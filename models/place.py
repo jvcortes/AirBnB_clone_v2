@@ -1,10 +1,16 @@
 #!/usr/bin/python3
 """This is the place class"""
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy import  ForeignKey, Table
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 
-
+metadata = Base.metadata
+place_amenity = Table('place_amenity',metadata,
+                      Column('place_id', String(60), ForeignKey('places.id'), primary_key=True),
+                      Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True)
+)
+  
 class Place(BaseModel, Base):
     """This is the class for Place
     Attributes:
@@ -33,4 +39,5 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     reviews = relationship("Review", backref="place")
     amenity_ids = []
-
+    amenities = relationship("Amenity", secondary=place_amenity,
+                             backref="place", viewonly=False)
