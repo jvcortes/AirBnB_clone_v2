@@ -21,6 +21,15 @@ class FileStorage:
     __objects = {}
 
     def delete(self, obj=None):
+        """
+        Deletes an object inside the storage.
+
+        Args:
+            obj (BaseModel): object to delete
+        """
+        if obj is None:
+            return
+
         for key in self.__objects:
             if obj.id == self.__objects[key].id:
                 del self.__objects[key]
@@ -28,15 +37,22 @@ class FileStorage:
         self.save()
 
     def all(self, cls=None):
-        """returns a dictionary
-        Return:
-            returns a dictionary of __object
         """
-        new_dict = {}
-        for key in self.__objects:
-            if cls.__name__ in key:
-                new_dict[key] = self.__objects[key]
+            Returns a dictionary of BaseModel objects.
+
+            Args:
+                cls (str): Class to filter, if the class is found, a
+                    dictionary with all the instances of the mentioned class is
+                    returned.
+
+            Return:
+                dictionary containing all the object instances.
+        """
         if cls:
+            new_dict = {}
+            for key in self.__objects:
+                if cls.__name__ in key:
+                    new_dict[key] = self.__objects[key]
             return new_dict
         return self.__objects
 
