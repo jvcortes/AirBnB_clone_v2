@@ -1,8 +1,10 @@
 #!/usr/bin/python3
-# Packs the contents of web_static into a .tgz file
+"""
+Fabric file for task 1.
+"""
 import os
 from datetime import datetime
-from fabric import Connection
+from fabric.api import *
 
 
 def do_pack():
@@ -14,12 +16,11 @@ def do_pack():
     if not os.path.exists("versions/"):
         os.mkdir("versions")
 
-    with Connection('localhost') as c:
-        filename = "web_static_{}{}{}{}{}".format(datetime.now().year,
+    filename = "web_static_{}{}{}{}{}.tgz".format(datetime.now().year,
                                                   datetime.now().month,
                                                   datetime.now().day,
                                                   datetime.now().hour,
                                                   datetime.now().minute)
-        if c.run("tar -cvzf versions/{} web_static".format(filename)).failed:
-            return None
-        return "versions/{}".format(filename)
+    if local("tar -cvzf versions/{} web_static".format(filename)).failed:
+        return None
+    return "versions/{}".format(filename)
