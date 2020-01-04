@@ -16,11 +16,9 @@ def do_pack():
     if not os.path.exists("versions/"):
         os.mkdir("versions")
 
-    filename = "web_static_{}{}{}{}{}.tgz".format(datetime.now().year,
-                                                  datetime.now().month,
-                                                  datetime.now().day,
-                                                  datetime.now().hour,
-                                                  datetime.now().minute)
+    filename = "web_static_{}.tgz".format(
+        datetime.now().strftime("%Y%m%d%H%M")
+    )
     if local("tar -cvzf versions/{} web_static".format(filename)).failed:
         return None
     return "versions/{}".format(filename)
