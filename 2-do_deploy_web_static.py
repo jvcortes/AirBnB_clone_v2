@@ -3,7 +3,7 @@
 Fabric file for task 2.
 """
 import os
-from fabric.api import *
+from fabric.api import env, put, run
 
 
 env.key_filename = "~/.ssh/holberton"
@@ -29,6 +29,16 @@ def do_deploy(archive_path):
         return False
 
     if run("rm /tmp/{}".format(filename)).failed:
+        return False
+
+    if run("mv /data/web_static/releases/{}/web_static/* "
+           "/data/web_static/releases/{}".format(filename.split(".")[0],
+                                                 filename.split(".")[0])
+           ).failed:
+        return False
+
+    if run("rm -rf /data/web_static/releases/{}/web_static".format(
+            filename.split(".")[0])).failed:
         return False
 
     if run("rm /data/web_static/current").failed:
