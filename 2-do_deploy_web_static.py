@@ -41,10 +41,10 @@ def do_deploy(archive_path):
             filename.split(".")[0])).failed:
         return False
 
-    if run("rm /data/web_static/current").failed:
+    if run("rm -rf /data/web_static/current").failed:
         return False
 
-    if run("ln -sf /data/web_static/releases/{} "
+    if run("ln -s /data/web_static/releases/{} "
            "/data/web_static/current".format(
                filename.split(".")[0])).failed:
         return False
