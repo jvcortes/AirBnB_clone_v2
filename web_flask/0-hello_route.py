@@ -14,7 +14,7 @@ def hello_hbnb():
     """
     Defines a route with a simple response.
     """
-    return "Hello HBNB!"
+    return "Hello HBNB!\n"
 
 
-app.run()
+app.run(host='0.0.0.0', port=5000)
