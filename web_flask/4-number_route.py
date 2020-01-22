@@ -59,7 +59,7 @@ def number(n):
     except ValueError:
         abort(404)
 
-    return "{} is an integer".format(n)
+    return "{} is a number".format(n)
 
 
 if __name__ == '__main__':
