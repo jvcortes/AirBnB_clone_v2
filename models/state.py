@@ -16,6 +16,7 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
 
     if os.environ["HBNB_TYPE_STORAGE"] != "db":
+        @property
         def cities(self):
             """
             Returns the list with all the cities associated with a state.
