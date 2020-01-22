@@ -17,6 +17,9 @@ class State(BaseModel, Base):
 
     if os.environ["HBNB_TYPE_STORAGE"] != "db":
         def cities(self):
+            """
+            Returns the list with all the cities associated with a state.
+            """
 
             associated_cities = []
             all_cities = models.storage.all(models.city.City)
