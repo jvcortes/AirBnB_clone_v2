@@ -20,7 +20,6 @@ class BaseModel:
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=created_at)
 
-
     def __init__(self, *args, **kwargs):
         """Instantiation of base model class
         Args:
@@ -41,8 +40,7 @@ class BaseModel:
                     self.id = self.id = str(uuid.uuid4())
                 if "created_at" not in kwargs:
                     self.created_at = self.updated_at = datetime.now()
- 
-                
+
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()

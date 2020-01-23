@@ -27,7 +27,6 @@ class DBStorage:
     __engine = None
     __session = None
 
-
     def __init__(self):
         user = os.environ.get('HBNB_MYSQL_USER')
         password = os.environ.get('HBNB_MYSQL_PWD')
@@ -40,7 +39,6 @@ class DBStorage:
         self.__engine = create_engine(arg, pool_pre_ping=True)
         if os.environ.get('HBNB_MYSQL_ENV') == 'test':
             Base.metadata.drop_all()
-
 
     def all(self, cls=None):
         """
@@ -65,7 +63,6 @@ class DBStorage:
 
         return objects
 
-
     def new(self, obj):
         """Adds a new object in the database session
 
@@ -75,11 +72,9 @@ class DBStorage:
         """
         self.__session.add(obj)
 
-
     def save(self):
         """Commits all changes into the database session."""
         self.__session.commit()
-
 
     def delete(self, obj):
         """
@@ -90,7 +85,6 @@ class DBStorage:
         """
         if obj:
             obj.delete()
-
 
     def reload(self):
         """Reloads the current database session."""
