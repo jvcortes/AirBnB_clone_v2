@@ -99,4 +99,7 @@ class DBStorage:
                                                      expire_on_commit=False))()
 
     def close(self):
+        """
+        Closes the current database Session.
+        """
         self.__session.close()
